@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function ItemsPage() {
-  return (
-    <div>ItemsPage</div>
-  )
+  return <div>ItemsPage</div>;
 }
 
-export default ItemsPage
+export default ItemsPage;
