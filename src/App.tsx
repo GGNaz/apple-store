@@ -1,6 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-
-import { Container } from "@mui/material";
 import LandingPage from "./pages/landingpage/LandingPage";
 import ItemsPage from "./pages/items/ItemsPage";
 import CartPage from "./pages/cart/CartPage";

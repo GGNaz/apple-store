@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 // import iphonewallpaper from "../../assets/iphonewallpaper.jpg";
 import iphone14 from "../../assets/iphone14.png";
 import {
@@ -9,7 +9,6 @@ import {
   Radio,
   RadioGroup,
   OutlinedInput,
-  Input,
 } from "@mui/material";
 import { CartProps, ColorVariantsProps } from "./ts/landingmodule";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
