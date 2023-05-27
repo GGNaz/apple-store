@@ -14,14 +14,18 @@ import {
 import { CartProps, ColorVariantsProps } from "./ts/landingmodule";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
+import { cartStore } from "../../zustand/cartStore";
+import { shallow } from "zustand/shallow";
 function LandingPage() {
   const [val, setVal] = useState<CartProps>({
-    name: "",
+    name: "iphone14",
     quantity: 1,
     color: "gray",
-    description: "",
+    specs: "",
     picture: "",
   });
+  const { storeCartList, mycart } = cartStore((state) => state, shallow);
+  console.log("🚀 ~ file: LandingPage.tsx:28 ~ LandingPage ~ mycart:", mycart);
   console.log("🚀 ~ file: LandingPage.tsx:21 ~ LandingPage ~ val:", val);
 
   const variantsLayout = () => {
@@ -212,6 +216,7 @@ function LandingPage() {
                       color: "#161617",
                       borderColor: "#161617",
                     }}
+                    onClick={() => storeCartList(val)}
                   >
                     Add to cart
                   </Button>

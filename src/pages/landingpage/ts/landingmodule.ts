@@ -2,7 +2,7 @@ export type CartProps = {
     name: string,
     quantity: number,
     color: string,
-    description: string,
+    specs: string,
     picture: string
 }
 

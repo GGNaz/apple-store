@@ -1,20 +1,37 @@
-// import create from 'zustand';
+import create from "zustand";
+import { CartProps } from "../pages/landingpage/ts/landingmodule";
 
-// type CounterState = {
-//   counter: object;
-//   increment: () => void;
-//   decrement: () => void;
-// };
+type ZustandCartProps = {
+  mycart: CartProps[];
+  storeCartList: (data: CartProps) => void;
+  //   decrement: () => void;
+};
 
-// const storeCart = (set: () => void, get:() => void, data:object) => {
-//   return set({ counter: data }),
-// }
+const storeCart = (set: any, data: CartProps) => {
+  const storedData = cartStore.getState().mycart;
+  // const copyStore = [...storedData]
+  // copyStore.push(data)
+  const findIfExist = storedData.findIndex(
+    (state) => state.name === data.name && state.color === data.color
+  );
+  if (findIfExist >= 0) {
+    const copyStoreData = [...storedData];
 
-// const useCounterStore = (set:any, get: any) => ({
-//   counter: 0,
-//   storeCartList: (data:object) => storeCart(set, get, data) ,
-//   // increment: () =>
-//   // decrement: () => set((state: CounterState) => ({ counter: state.counter - 1 })),
-// });
+    copyStoreData[findIfExist].quantity =
+      copyStoreData[findIfExist].quantity + 1;
+    set({
+      mycart: [...copyStoreData],
+    });
+  } else {
+    set({ mycart: [...storedData, data] });
+  }
+};
 
-// export const counterStore = create<CounterState>(useCounterStore);
+const useCartStore = (set: any, get: any) => ({
+  mycart: [],
+  storeCartList: (data: CartProps) => storeCart(set, data),
+  // increment: () =>
+  // decrement: () => set((state: CounterState) => ({ counter: state.counter - 1 })),
+});
+
+export const cartStore = create<ZustandCartProps>(useCartStore);

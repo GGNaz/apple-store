@@ -1,9 +1,12 @@
-import { Container, Button } from "@mui/material";
+import { Container, Button, Box } from "@mui/material";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import LocalMallRoundedIcon from "@mui/icons-material/LocalMallRounded";
+import { cartStore } from "../../zustand/cartStore";
+import { shallow } from "zustand/shallow";
 export default function Navbar() {
+  const { mycart } = cartStore((state) => state, shallow);
   return (
     <Container
       style={{
@@ -43,8 +46,28 @@ export default function Navbar() {
           Airpods
         </NavLink>
       </div>
-      <Button style={{ color: "#161617" }}>
+      <Button
+        style={{ color: "#161617", display: "flex", position: "relative" }}
+      >
         <LocalMallRoundedIcon />
+        {mycart?.length > 0 && (
+          <Box
+            sx={{ position: "absolute", bottom: 0, right: 10 }}
+            style={{
+              backgroundColor: "gray",
+              color: "white",
+              // borde: "black",
+              zIndex: 10,
+              height: "18px",
+              width: "18px",
+              fontSize: "10px",
+              borderRadius: "100%",
+            }}
+            className="animate__animated animate__backInUp"
+          >
+            <span>{mycart?.length}</span>
+          </Box>
+        )}
       </Button>
     </Container>
   );
