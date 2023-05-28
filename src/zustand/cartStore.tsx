@@ -27,7 +27,7 @@ const storeCart = (set: any, data: CartProps) => {
   }
 };
 
-const useCartStore = (set: any, get: any) => ({
+const useCartStore = (set: any) => ({
   mycart: [],
   storeCartList: (data: CartProps) => storeCart(set, data),
   // increment: () =>

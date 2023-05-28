@@ -55,7 +55,7 @@ function LandingPage() {
           // value={value}
           onChange={({ target }) => setVal({ ...val, color: target.value })}
         >
-          {colors.map(({ value, color }: ColorVariantsProps) => {
+          {colors.map(({ value }: ColorVariantsProps) => {
             return <Radio style={{ color: value }} value={value} />;
           })}
         </RadioGroup>
