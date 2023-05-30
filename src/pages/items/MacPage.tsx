@@ -2,12 +2,12 @@ import { Box, Button, Card, Container, Grid, Typography } from "@mui/material";
 import { macList } from "../../json/macList";
 
 import { MacbookProps } from "./ts/macbook";
+import { cartStore } from "../../zustand/cartStore";
+import { shallow } from "zustand/shallow";
 
 function MacPage() {
   console.log("🚀 ~ file: MacPage.tsx:3 ~ macList:", macList);
-  type SampleProps = {
-    name: string;
-  };
+  const { storeCartList, mycart } = cartStore((state) => state, shallow);
   const renderMacList = () => {
     return (
       <Grid container spacing={2}>
@@ -29,6 +29,7 @@ function MacPage() {
               audio,
               operatingSystem,
               inTheBox,
+              quantity
             } = data ?? {};
             return (
               <Grid item md={6}>
@@ -39,6 +40,7 @@ function MacPage() {
                     p: 5,
                     gap: 2,
                   }}
+                  onClick={() => storeCartList({...data, color: color[0]})}
                 >
                   <img
                     src={picture}

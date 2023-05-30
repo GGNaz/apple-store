@@ -14,4 +14,5 @@ export type IpadProps = {
     audio: string[],
     operatingSystem: string,
     inTheBox: string[],
+    quantity: number
 }

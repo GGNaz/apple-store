@@ -1,13 +1,14 @@
 import create from "zustand";
-import { CartProps } from "../pages/landingpage/ts/landingmodule";
+import { CartProps, MyCartProps } from "../pages/landingpage/ts/landingmodule";
 
 type ZustandCartProps = {
-  mycart: CartProps[];
-  storeCartList: (data: CartProps) => void;
+  mycart: MyCartProps[];
+  storeCartList: (data: MyCartProps) => void;
+  removeCart: (id: number) => void;
   //   decrement: () => void;
 };
 
-const storeCart = (set: any, data: CartProps) => {
+const storeCart = (set: any, data: MyCartProps) => {
   const storedData = cartStore.getState().mycart;
   // const copyStore = [...storedData]
   // copyStore.push(data)
@@ -27,9 +28,22 @@ const storeCart = (set: any, data: CartProps) => {
   }
 };
 
+const removeStoredCart = (set:any, id:number) => {
+  const storedData = cartStore.getState().mycart;
+  const findId = storedData.findIndex(({_id}) => _id === id)
+  console.log("🚀 ~ file: cartStore.tsx:34 ~ removeStoredCart ~ findId:", findId)
+  if(findId>=0) {
+    storedData.splice(findId, 1)
+    console.log("🚀 ~ file: cartStore.tsx:37 ~ removeStoredCart ~ storedData:", storedData)
+    
+    set({ mycart: [...storedData] });
+  }
+}
+
 const useCartStore = (set: any) => ({
   mycart: [],
-  storeCartList: (data: CartProps) => storeCart(set, data),
+  storeCartList: (data: MyCartProps) => storeCart(set, data),
+  removeCart: (id:number) => removeStoredCart(set, id),
   // increment: () =>
   // decrement: () => set((state: CounterState) => ({ counter: state.counter - 1 })),
 });

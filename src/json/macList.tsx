@@ -27,6 +27,7 @@ export const macList = [
       "30W USB-C Power Adapter",
       "USB-C Charge Cable (2m)",
     ],
+    quantity: 1
   },
   {
     _id: 2,
@@ -56,6 +57,7 @@ export const macList = [
       "67W USB-C Power Adapter",
       "USB-C Charge Cable (2m)",
     ],
+    quantity: 1
   },
   {
     _id: 3,
@@ -82,6 +84,7 @@ export const macList = [
       "30W USB-C Power Adapter",
       "USB-C Charge Cable (2m)",
     ],
+    quantity: 1
   },
 
   {
@@ -112,5 +115,6 @@ export const macList = [
       "67W USB-C Power Adapter",
       "USB-C Charge Cable (2m)",
     ],
+    quantity: 1
   },
 ];

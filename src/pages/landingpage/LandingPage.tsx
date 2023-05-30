@@ -10,18 +10,42 @@ import {
   RadioGroup,
   OutlinedInput,
 } from "@mui/material";
-import { CartProps, ColorVariantsProps } from "./ts/landingmodule";
+import { CartProps, ColorVariantsProps, MyCartProps } from "./ts/landingmodule";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 import { cartStore } from "../../zustand/cartStore";
 import { shallow } from "zustand/shallow";
+
 function LandingPage() {
-  const [val, setVal] = useState<CartProps>({
-    name: "iphone14",
-    quantity: 1,
+  const [val, setVal] = useState<MyCartProps>({
+    _id: 14,
+    name: "iPhone 14",
+    price: 55000,
     color: "gray",
-    specs: "",
-    picture: "",
+    display:
+      "Super Retina XDR display, 6.1‑inch (diagonal) all‑screen OLED display ",
+    picture: iphone14,
+    chip: [
+      "A15 Bionic chip",
+      "6‑core CPU with 2 performance and 4 efficiency cores",
+      "5‑core GPU",
+    ],
+    batteryAndPower: ["Up to 20 hours", "Up to 50% charge in around 30 minutes11 with 20W adapter or higher (available separately)"],
+    memory: "128GB",
+    storage: " 128GB",
+    touchID: "Enabled by TrueDepth camera for facial recognition",
+    camera: "12MP Main: 26mm, ƒ/1.5 aperture, sensor‑shift optical image stabilization, seven‑element lens",
+    audio: [
+      "FaceTime audio",
+      "Spatial Audio",
+    ],
+    operatingSystem: "iOS 16",
+    inTheBox: [
+      "iPhone with iOS 16",
+      "USB-C to Lightning Cable",
+      "Documentation",
+    ],
+    quantity: 1
   });
   const { storeCartList, mycart } = cartStore((state) => state, shallow);
   console.log("🚀 ~ file: LandingPage.tsx:28 ~ LandingPage ~ mycart:", mycart);
@@ -108,6 +132,7 @@ function LandingPage() {
         flexDirection: "column",
         marginBottom: "5em",
       }}
+    
       gap={5}
     >
       <Box
@@ -117,6 +142,7 @@ function LandingPage() {
           left: 0,
           height: "100vh",
           width: "100%",
+          backgroundColor: "#F5F5F7",
         }}
       >
         {/* <img
@@ -133,15 +159,16 @@ function LandingPage() {
         /> */}
         <Box
           style={{
-            backgroundColor: "#F5F5F7",
+           
             position: "absolute",
             display: "flex",
             justifyContent: "space-evenly",
-            top: -5,
+            top: 20,
             left: 0,
             height: "100vh",
             width: "100%",
           }}
+
         >
           <Box
             style={{

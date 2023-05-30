@@ -14,4 +14,5 @@ export type MacbookProps = {
     audio: string[],
     operatingSystem: string,
     inTheBox: string[],
+    quantity: number
 }

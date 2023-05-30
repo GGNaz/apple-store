@@ -61,6 +61,10 @@ export default function Navbar() {
             Airpods
           </NavLink>
         </Box>
+        <NavLink
+            to="/cart"
+          
+          >
         <Button
           style={{ color: "#161617", display: "flex", position: "relative" }}
         >
@@ -84,6 +88,7 @@ export default function Navbar() {
             </Box>
           )}
         </Button>
+        </NavLink>
       </Container>
     </Box>
   );

@@ -33,6 +33,7 @@ export const iPadList = [
       "USB-C Charge Cable (1 meter)",
       "20W USB-C Power Adapter",
     ],
+    quantity: 1
   },
   {
     _id: 2,
@@ -65,5 +66,6 @@ export const iPadList = [
       "USB‑C Charge Cable (1m)",
       "20W USB‑C Power Adapter",
     ],
+    quantity: 1
   },
 ];
