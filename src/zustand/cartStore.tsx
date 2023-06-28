@@ -28,22 +28,28 @@ const storeCart = (set: any, data: MyCartProps) => {
   }
 };
 
-const removeStoredCart = (set:any, id:number) => {
+const removeStoredCart = (set: any, id: number) => {
   const storedData = cartStore.getState().mycart;
-  const findId = storedData.findIndex(({_id}) => _id === id)
-  console.log("🚀 ~ file: cartStore.tsx:34 ~ removeStoredCart ~ findId:", findId)
-  if(findId>=0) {
-    storedData.splice(findId, 1)
-    console.log("🚀 ~ file: cartStore.tsx:37 ~ removeStoredCart ~ storedData:", storedData)
-    
+  const findId = storedData.findIndex(({ _id }) => _id === id);
+  console.log(
+    "🚀 ~ file: cartStore.tsx:34 ~ removeStoredCart ~ findId:",
+    findId
+  );
+  if (findId >= 0) {
+    storedData.splice(findId, 1);
+    console.log(
+      "🚀 ~ file: cartStore.tsx:37 ~ removeStoredCart ~ storedData:",
+      storedData
+    );
+
     set({ mycart: [...storedData] });
   }
-}
+};
 
 const useCartStore = (set: any) => ({
   mycart: [],
   storeCartList: (data: MyCartProps) => storeCart(set, data),
-  removeCart: (id:number) => removeStoredCart(set, id),
+  removeCart: (id: number) => removeStoredCart(set, id),
   // increment: () =>
   // decrement: () => set((state: CounterState) => ({ counter: state.counter - 1 })),
 });
