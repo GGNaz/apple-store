@@ -18,21 +18,12 @@ function MacPage() {
               name,
               price,
               color,
-              display,
+           
               picture,
-              chip,
-              batteryAndPower,
-              memory,
-              storage,
-              touchID,
-              camera,
-              audio,
-              operatingSystem,
-              inTheBox,
-              quantity
+            
             } = data ?? {};
             return (
-              <Grid item md={6}>
+              <Grid item md={6} key={_id}>
                 <Card
                   sx={{
                     display: "flex",

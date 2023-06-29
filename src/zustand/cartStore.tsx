@@ -4,7 +4,7 @@ import { CartProps, MyCartProps } from "../pages/landingpage/ts/landingmodule";
 type ZustandCartProps = {
   mycart: MyCartProps[];
   storeCartList: (data: MyCartProps) => void;
-  removeCart: (id: number) => void;
+  removeCart: (id: number, itemColor:string) => void;
   //   decrement: () => void;
 };
 
@@ -28,9 +28,9 @@ const storeCart = (set: any, data: MyCartProps) => {
   }
 };
 
-const removeStoredCart = (set: any, id: number) => {
+const removeStoredCart = (set: any, id: number, itemColor:string) => {
   const storedData = cartStore.getState().mycart;
-  const findId = storedData.findIndex(({ _id }) => _id === id);
+  const findId = storedData.findIndex(({ _id ,color}) => _id === id&&color===itemColor);
   console.log(
     "🚀 ~ file: cartStore.tsx:34 ~ removeStoredCart ~ findId:",
     findId
@@ -49,7 +49,7 @@ const removeStoredCart = (set: any, id: number) => {
 const useCartStore = (set: any) => ({
   mycart: [],
   storeCartList: (data: MyCartProps) => storeCart(set, data),
-  removeCart: (id: number) => removeStoredCart(set, id),
+  removeCart: (id: number,itemColor:string) => removeStoredCart(set, id,itemColor),
   // increment: () =>
   // decrement: () => set((state: CounterState) => ({ counter: state.counter - 1 })),
 });

@@ -45,7 +45,8 @@ function LandingPage() {
       "USB-C to Lightning Cable",
       "Documentation",
     ],
-    quantity: 1
+    quantity: 1,
+
   });
   const { storeCartList, mycart } = cartStore((state) => state, shallow);
   console.log("🚀 ~ file: LandingPage.tsx:28 ~ LandingPage ~ mycart:", mycart);

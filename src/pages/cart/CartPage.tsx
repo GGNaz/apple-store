@@ -10,19 +10,43 @@ import { cartStore } from "../../zustand/cartStore";
 import { shallow } from "zustand/shallow";
 import { CartProps, MyCartProps } from "../landingpage/ts/landingmodule";
 import { useEffect, useState } from "react";
+import { CheckedItemProps } from "./ts/cart";
 
-type isCheckProps = {
-  isChecked: boolean;
-};
+
 
 function CartPage() {
   const { mycart, removeCart } = cartStore((state) => state, shallow);
   console.log("🚀 ~ file: CartPage.tsx:7 ~ CartPage ~ mycart:", mycart);
-  const [selected, setSelected] = useState<MyCartProps[]>([]);
+  const [selected, setSelected] = useState<CheckedItemProps[]  >([]);
+  const [cart, setCart] = useState<CheckedItemProps[] >([]);
+  console.log("🚀 ~ file: CartPage.tsx:22 ~ CartPage ~ cart:", cart)
+  const [checkedItems, setCheckedItems] = useState<CheckedItemProps[] >([]);
   const [total, setTotal] = useState<number>(0);
+  
+  useEffect(() => {
+    const restructMyCart = () => {  
+      let cartList:CheckedItemProps[] = []
+      if(mycart.length>0){
+        mycart?.map((data) => {
+          const params = {
+            ...data,
+            isChecked: false
+          }
+          cartList.push(params)
+
+        })
+        setCart(cartList)
+      }
+
+    }
+    restructMyCart()
+  },[])
+
   console.log("🚀 ~ file: CartPage.tsx:17 ~ CartPage ~ selected:", selected);
-  function calculateTotal(checked: boolean, data: MyCartProps) {
-    const copySelected: MyCartProps[] = [...selected];
+  function calculateTotal(checked: boolean, data: CheckedItemProps) {
+    console.log("🚀 ~ file: CartPage.tsx:47 ~ calculateTotal ~ data:", data)
+    const copySelected: CheckedItemProps[] = [...selected];
+    
     if (checked) {
       copySelected.push(data);
       setSelected(copySelected);
@@ -31,6 +55,17 @@ function CartPage() {
       copySelected.splice(findItem, 1);
       setSelected(copySelected);
     }
+    const copyCart: CheckedItemProps[] = [...cart];
+
+    const cartIndex = cart?.findIndex(({ _id, color }) => _id === data._id&&color === data.color);
+    console.log("🚀 ~ file: CartPage.tsx:59 ~ calculateTotal ~ cartIndex:", cartIndex)
+    const newParams = {
+      ...data,
+      isChecked: checked
+    }
+    copyCart[cartIndex] = newParams
+    console.log("🚀 ~ file: CartPage.tsx:58 ~ calculateTotal ~ copyCart:", copyCart)
+    return setCart(copyCart)
     // console.log(
     //   "🚀 ~ file: CartPage.tsx:19 ~ calculateTotal ~ copySelected:",
     //   copySelected
@@ -40,9 +75,20 @@ function CartPage() {
   }
 
   function checkOut() {
+    const copyCart: CheckedItemProps[] = [...cart];
+
+   
     if (selected?.length > 0) {
       alert("Checkout success!");
-      selected?.map(({ _id }) => removeCart(_id));
+      selected?.map(({ _id, color }) => { 
+        const cartIndex = cart?.findIndex((data) => data._id === _id&&data.color === color);
+        if(cartIndex>=0){
+          copyCart.splice(cartIndex, 1)
+        }
+      
+        removeCart(_id,color)
+      });
+      setCart(copyCart)
     } else {
       alert("No items selected");
     }
@@ -52,8 +98,8 @@ function CartPage() {
     const calculate = () => {
       let computedTotal = 0;
       if (selected?.length > 0) {
-        selected.map(({ price }) => {
-          computedTotal = computedTotal + price;
+        selected.forEach(({ price,quantity }) => {
+          computedTotal = computedTotal + price*quantity;
           return computedTotal;
         });
         setTotal(computedTotal);
@@ -64,12 +110,20 @@ function CartPage() {
     calculate();
   }, [selected]);
 
+  
+
+  // function checkedItemsSelected(_id:number)  {
+  // const checkIfExist = selected?.findIndex((data)  => data._id === _id)
+  // if(checkIfExist >=0) return true
+  // else return false
+  // } 
+
   const cartList = () => {
     return (
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-        {mycart.length > 0
-          ? mycart.map((data) => {
-              const { picture, name, color, quantity, price, _id } = data ?? {};
+        {cart.length > 0
+          ? cart.map((data) => {
+              const { picture, name, color, quantity, price, _id,isChecked } = data ?? {};
               return (
                 <Card
                   sx={{
@@ -77,8 +131,11 @@ function CartPage() {
                     justifyContent: "space-between",
                     padding: 2,
                   }}
+                  key={_id}
                 >
                   <Checkbox
+                  checked={isChecked}
+                  // value={isChecked}
                     onChange={(e) => calculateTotal(e.target.checked, data)}
                   />
                   <Box sx={{ display: "flex", gap: 2 }}>
@@ -106,8 +163,8 @@ function CartPage() {
                     </Box>
                   </Box>
                   <Box sx={{ display: "flex", flexDirection: "column" }}>
-                    <Typography>₱{price}</Typography>
-                    <Button onClick={() => removeCart(_id)}>Delete</Button>
+                    <Typography>₱{price?.toLocaleString()}</Typography>
+                    <Button onClick={() => removeCart(_id, color)}>Delete</Button>
                   </Box>
                 </Card>
               );
@@ -121,7 +178,7 @@ function CartPage() {
             fontSize: "2rem",
           }}
         >
-          Total: {total}
+          Total: ₱{total?.toLocaleString()}
         </Box>
         <Box
           style={{

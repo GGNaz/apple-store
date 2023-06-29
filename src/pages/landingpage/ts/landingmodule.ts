@@ -13,7 +13,7 @@ export type ColorVariantsProps = {
 
 }
 
-export type MyCartProps = {
+export interface MyCartProps {
     _id: number,
     name: string,
     price: number,
@@ -29,5 +29,6 @@ export type MyCartProps = {
     audio: string[],
     operatingSystem: string,
     inTheBox: string[],
-    quantity: number
+    quantity: number,
+  
 }
